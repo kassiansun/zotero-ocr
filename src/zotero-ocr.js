@@ -160,7 +160,7 @@ ZoteroOCR = {
                     // => create an empty parent item to keep things tidy
                     if (pdfItem.isTopLevelItem()) {
                         await Zotero.getActiveZoteroPane().createEmptyParent(pdfItem);
-                    } 
+                    }
                     item = Zotero.Items.get(item.parentItemID);
                 }
                 else {
@@ -192,7 +192,7 @@ ZoteroOCR = {
             let imageList = PathUtils.join(dir, 'image-list.txt');
             if (!(await IOUtils.exists(imageList))) {
                 try {
-                    let pdftoppmCmdArgs = ['-png', '-r', Zotero.Prefs.get("zoteroocr.outputDPI"), pdf, dir + '/page'];
+                    let pdftoppmCmdArgs = ['-jpeg', '-r', Zotero.Prefs.get("zoteroocr.outputDPI"), pdf, dir + '/page'];
                     Zotero.debug("Running " + pdftoppm + ' ' + pdftoppmCmdArgs.join(' '));
                     await Zotero.Utilities.Internal.exec(pdftoppm, pdftoppmCmdArgs);
                 }
@@ -201,12 +201,12 @@ ZoteroOCR = {
                 }
 
                 var imageListArray = [];
-                
+
                 await IOUtils.getChildren(dir).then(
                     (entries) => {
                         for (const entry of entries) {
                             Zotero.debug('IOutils.getChildren() ran', entry);
-                            if (entry.match(/-\d+\.png$/)) {
+                            if (entry.match(/-\d+\.jpg$/)) {
                                         imageListArray.push(entry);
                             }
                         }
